@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - RapidAid</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <script>
+        // Load cart items into the form on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartSummaryContainer = document.getElementById('cart-summary');
+
+            if (cart.length === 0) {
+                cartSummaryContainer.innerHTML = '<p>Your cart is empty!</p>';
+                return;
+            }
+
+            let cartHTML = '<table><thead><tr><th>Item</th><th>Price</th><th>Quantity</th></tr></thead><tbody>';
+            let total = 0;
+
+            cart.forEach(item => {
+                cartHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>₹${item.price.toFixed(2)}</td>
+                        <td>1</td>
+                    </tr>
+                `;
+                total += item.price;
+            });
+
+            cartHTML += `</tbody><tfoot><tr><td colspan="2"><strong>Total:</strong></td><td>₹${total.toFixed(2)}</td></tr></tfoot></table>`;
+            cartSummaryContainer.innerHTML = cartHTML;
+        });
+
+        // Show the Terms and Conditions pop-up
+        function showTermsPopup() {
+            document.getElementById('terms-popup').style.display = 'block';
+        }
+
+        // Hide the Terms and Conditions pop-up
+        function hideTermsPopup() {
+            document.getElementById('terms-popup').style.display = 'none';
+        }
+
+        // Close the pop-up when clicking outside the content
+        window.onclick = function(event) {
+            const popup = document.getElementById('terms-popup');
+            if (event.target === popup) {
+                hideTermsPopup();
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">RapidAid</div>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Checkout Form Section -->
+    <main class="checkout-page">
+        
+        <div class="checkout-container">
+            <h2 class="checkout-heading">Complete Your Order</h2>
+
+            <!-- Order Summary Section -->
+            <div id="cart-summary" class="cart-summary">
+                <h3>Order Summary</h3>
+                <!-- Cart items will load here -->
+            </div>
+
+            <!-- Checkout Form -->
+            <form id="checkout-form" class="checkout-form" onsubmit="return placeOrder(event)">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Delivery Address:</label>
+                    <textarea id="address" name="address" placeholder="Enter your delivery address" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode:</label>
+                    <input type="text" id="pincode" name="pincode" placeholder="Enter your area's pincode" required>
+                </div>
+                <div class="form-group terms">
+    <input type="checkbox" id="accept-terms" name="accept-terms" required>
+    <label for="accept-terms">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the <a href="#" onclick="showTermsPopup(); return false;">Terms and Conditions</a>, including drone-based deliveries.
+    </label>
+</div>
+
+
+                <!-- Terms and Conditions Popup -->
+                <div id="terms-popup" class="popup" style="display: none;">
+                    <div class="popup-content">
+                        <span class="close-btn" onclick="hideTermsPopup()">&times;</span>
+                        <h3>Terms and Conditions</h3>
+                        <p>
+                            Here are the terms and conditions for using RapidAid services. Please read carefully...
+                            <br>
+                            - You must provide accurate information.
+                            <br>
+                            - Delivery times may vary.
+                            <br>
+                            - We are not responsible for any issues with the delivery.
+                            <br>
+                            - All sales are final.
+                            <br>
+                            - By accepting, you agree to our privacy policy and terms.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="checkout-btn">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 RapidAid. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

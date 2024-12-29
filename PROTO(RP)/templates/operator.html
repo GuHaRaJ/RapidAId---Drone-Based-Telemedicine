@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">RapidAid</div>
+    </nav>
+
+    <main>
+        <h1>Operator Dashboard</h1>
+        {% if order_details %}
+            {% for order_detail in order_details %}
+                <div class="order">
+                    <h3>Order ID: {{ order_detail.order.order_id }}</h3>
+                    <p>Name: {{ order_detail.order.name }}</p>
+                    <p>Email: {{ order_detail.order.email }}</p>
+                    <p>Phone: {{ order_detail.order.phone }}</p>
+                    <p>Address: {{ order_detail.order.address }}</p>
+                    <p>Pincode: {{ order_detail.order.pincode }}</p>
+                    <h4>Items:</h4>
+                    <ul>
+                        {% for item in order_detail.items %}
+                            <li>{{ item.item_name }} - ₹{{ item.price }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No orders found.</p>
+        {% endif %}
+    </main>
+</body>
+
+</html>
