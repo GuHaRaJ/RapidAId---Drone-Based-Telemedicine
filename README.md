@@ -2,11 +2,11 @@
 
 **Status:** Under Development
 
-RapidAId aims to revolutionize healthcare access by providing rapid, on-demand delivery of medicines via drones. This repository contains the frontend component of the RapidAId system.
+RapidAId aims to revolutionize healthcare access by providing rapid, on-demand delivery of medicines via drones. This repository contains the frontend component of the RapidAid system.
 
 ## Project Overview
 
-RapidAId addresses the critical need for timely access to essential medicines, especially in remote or underserved areas. By leveraging drone technology, we aim to:
+RapidAid addresses the critical need for timely access to essential medicines, especially in remote or underserved areas. By leveraging drone technology, we aim to:
 
 *   **Reduce delivery times:** Significantly faster delivery compared to traditional methods.
 *   **Expand access to care:** Reach patients in areas with limited infrastructure or transportation options.
